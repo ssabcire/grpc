@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package rpc;
+
+message Payload {
+    int32 id    = 1;
+    bytes data  = 2;
+}
+
+// gRPCのサービスを定義
+service Fetch {
+    rpc Capitalize(Payload) returns (Payload) {}
+}

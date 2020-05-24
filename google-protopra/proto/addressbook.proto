@@ -1,0 +1,40 @@
+// https://developers.google.com/protocol-buffers/docs/pythontutorial#why-use-protocol-buffers
+syntax = "proto2";
+
+// 最初はパッケージ宣言から始まる。異なるプロジェクト間の名前の競合を防ぐのに役立つ
+package tutorial;
+
+// メッセージは、型付きkey-valueセットを含んでいる集合体です。
+message Person {
+  // 各要素の1, 2, 3, ...
+  // はバイナリエンコーディングで使用するときのユニークなタグとして使う
+  required string name = 1;
+  //   requredはフィールドの値を指定する必要がある
+  required int32 id = 2;
+  optional string email = 3;
+
+  enum PhoneType {
+    MOBILE = 0;
+    HOME = 1;
+    WORK = 2;
+  }
+
+  //   フィールドには他のmessage-typeを使用して、メッセージにさらに構造を追加することもできる
+  message PhoneNumber {
+    required string number = 1;
+    // 他のメッセージ内にネストされたメッセージタイプを定義することもできる。PhoneTypeタイプはPerson内で定義されてる
+    optional PhoneType type = 2 [ default = HOME ];
+  }
+
+  //   repeatedは動的にサイズ変更される配列 だから{"PhoneNumber": [111, 222,
+  //   333]}て感じにできる
+  repeated PhoneNumber phones = 4;
+}
+
+message AddressBook {
+  // 上記messageのPerson Type
+  repeated Person people = 1;
+}
+
+// コンパイルするとき
+// protoc -I=$SRC_DIR --python_out=$DST_DIR $SRC_DIR/addressbook.proto
