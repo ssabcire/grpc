@@ -1,17 +1,14 @@
-// The greeting service definition.
+// gRPCサービス定義
 service Greeter {
-  // Sends a greeting
-  rpc SayHello (HelloRequest) returns (HelloReply) {}
-  // Sends another greeting
-  rpc SayHelloAgain (HelloRequest) returns (HelloReply) {}
+  // 挨拶を送る
+  rpc SayHello(HelloRequest) returns (HelloReply) {}
+  // 別の挨拶を送る
+  rpc SayHelloAgain(HelloRequest) returns (HelloReply) {}
 }
 
-// The request message containing the user's name.
-message HelloRequest {
-  string name = 1;
-}
+// メッセージは、型付きkey-valueセットを含んでいる集合体
+// HelloRequestメッセージはname keyを持つ
+message HelloRequest { string name = 1; }
 
 // The response message containing the greetings
-message HelloReply {
-  string message = 1;
-}
+message HelloReply { string message = 1; }
